@@ -1,13 +1,8 @@
-<div align="center">
-#ASE Project
-## AI-Powered Real-Time Security Incident Response System
-
-
-An open-source, self-hostable AI SOC. The agent's prompts, tool calls, and rationale are logged step-by-step and replayable. MIT-licensed.
-
----
 # ASE Project
 ## AI-Powered Real-Time Security Incident Response System
+<div align="center">
+An open-source, self-hostable AI SOC. The agent's prompts, tool calls, and rationale are logged step-by-step and replayable. MIT-licensed.
+
 ---
 
 ## Try SIRC in 60 seconds
