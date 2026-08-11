@@ -1,67 +1,45 @@
 <div align="center">
+# ASE Project
+## AI-Powered Real-Time Security Incident Response System
 
-<img src="apps/web/public/logo-mark.svg" alt="AiSOC" width="120" />
-
-# AiSOC
 
 An open-source, self-hostable AI SOC. The agent's prompts, tool calls, and rationale are logged step-by-step and replayable. MIT-licensed.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-22c55e.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-7.7.0-f59e0b?style=flat-square)](CHANGELOG.md)
-[![CI](https://img.shields.io/github/actions/workflow/status/beenuar/AiSOC/ci.yml?branch=main&label=CI&style=flat-square)](https://github.com/beenuar/AiSOC/actions/workflows/ci.yml)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/beenuar/AiSOC/codeql.yml?branch=main&label=CodeQL&style=flat-square)](https://github.com/beenuar/AiSOC/actions/workflows/codeql.yml)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/beenuar/AiSOC/badge)](https://securityscorecards.dev/viewer/?uri=github.com/beenuar/AiSOC)
-[![Discussions](https://img.shields.io/github/discussions/beenuar/AiSOC?style=flat-square&label=discussions&color=ec4899)](https://github.com/beenuar/AiSOC/discussions)
-
-[![Open in GitHub Codespaces](https://img.shields.io/badge/Open%20in-Codespaces-24292e?style=for-the-badge&logo=github)](https://codespaces.new/beenuar/AiSOC?quickstart=1)
-[![Live demo on Fly.io](https://img.shields.io/badge/Live%20demo-tryaisoc.com-7b2bbe?style=for-the-badge&logo=fly-dot-io&logoColor=white)](https://tryaisoc.com)
-[![Render demo (one-click)](https://img.shields.io/badge/Render-one--click-46e3b7?style=for-the-badge&logo=render&logoColor=white)](https://render.com/deploy?repo=https://github.com/beenuar/AiSOC)
-
-<sub>The community-maintained demo at <a href="https://tryaisoc.com">tryaisoc.com</a> runs on Fly.io and can go offline; see <a href="docs/operations/live-demo-runbook.md">docs/operations/live-demo-runbook.md</a> and use Codespaces as the always-on fallback.</sub>
-
-<br />
-
-<a href="apps/web/public/demo/"><img src="apps/web/public/demo-thumbnail.svg" alt="90-second AiSOC product walkthrough — agent investigating the seeded LockBit 3.0 case" width="720" /></a>
-
-<sub><em>90-second walkthrough — agent investigates the seeded LockBit 3.0 case end-to-end. The rendered <code>.mp4</code> + <code>hero.gif</code> land with the v8.0 launch; the brief is in <a href="docs/demo/SCREENCAST_SHOTLIST.md">docs/demo/SCREENCAST_SHOTLIST.md</a>.</em></sub>
-
-</div>
-
 ---
 
-## Try AiSOC in 60 seconds
+## Try SIRC in 60 seconds
 
-One command — no clone, no Docker, no keys (`npx aisoc` lands on npm with the v8.0 launch; today it builds from [`packages/aisoc-lite/`](packages/aisoc-lite/)):
+One command — no clone, no Docker, no keys (`npx SIRC` lands on npm with the v8.0 launch; today it builds from [`packages/SIRC-lite/`](packages/SIRC-lite/)):
 
 ```bash
-npx aisoc triage --demo
-# ✓ AiSOC triaged 200 alerts: 12 TP, 171 FP suppressed (85.5% noise), 17 need review — in 0.1s
+npx SIRC triage --demo
+# ✓ SIRC triaged 200 alerts: 12 TP, 171 FP suppressed (85.5% noise), 17 need review — in 0.1s
 ```
 
 The wedge CLI scores a batch of alerts to verdicts (escalate / review / suppress) with a deterministic engine ported from the production triage scorer — zero LLM key required. Or pick whichever path matches what you already have on your machine:
 
 | If you have…                          | Run this                                                                                                 | What you get                                                                                       |
 |---------------------------------------|----------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| **Python 3.10+** (no Docker)          | `pip install -e packages/aisoc-sandbox && aisoc-sandbox demo`                                            | Offline agent investigation walked through Detect → Triage → Hunt → Respond and printed to stdout. **< 5 s.** No API key, no network. |
-| **A browser** (zero install)          | [Open in Codespaces](https://codespaces.new/beenuar/AiSOC?quickstart=1)                                  | Browser IDE → `pnpm aisoc:demo --no-open` → click forwarded port `3000`. ~5 min cold.              |
-| **Docker + pnpm**                     | `git clone https://github.com/beenuar/AiSOC && cd AiSOC && pnpm aisoc:demo`                              | Local stack on Postgres + Redis + Kafka + api + agents + web. Browser opens at `INC-RT-001`.       |
-| **Nothing** (clean Linux/macOS/Win)   | `curl -fsSL https://raw.githubusercontent.com/beenuar/AiSOC/main/install.sh \| bash`                     | Bootstraps Docker, Node, pnpm, git for you; then runs `pnpm aisoc:demo`.                           |
+| **Python 3.10+** (no Docker)          | `pip install -e packages/SIRC-sandbox && SIRC-sandbox demo`                                            | Offline agent investigation walked through Detect → Triage → Hunt → Respond and printed to stdout. **< 5 s.** No API key, no network. |
+| **A browser** (zero install)          | [Open in Codespaces](https://codespaces.new/beenuar/SIRC?quickstart=1)                                  | Browser IDE → `pnpm SIRC:demo --no-open` → click forwarded port `3000`. ~5 min cold.              |
+| **Docker + pnpm**                     | `git clone https://github.com/beenuar/SIRC && cd SIRC && pnpm SIRC:demo`                              | Local stack on Postgres + Redis + Kafka + api + agents + web. Browser opens at `INC-RT-001`.       |
+| **Nothing** (clean Linux/macOS/Win)   | `curl -fsSL https://raw.githubusercontent.com/beenuar/SIRC/main/install.sh \| bash`                     | Bootstraps Docker, Node, pnpm, git for you; then runs `pnpm SIRC:demo`.                           |
 
-The first row is new: [`aisoc-sandbox`](packages/aisoc-sandbox/) is a zero-dependency, in-memory simulator of the agent funnel. Pick a [bundled scenario](packages/aisoc-sandbox/README.md#bundled-scenarios) (`lateral-movement`, `aws-credential-exfil`, `phishing-payload`, `kubernetes-privesc`, `github-token-theft`) or feed in your own JSON via `--file`. The other three rows boot the real stack and land you on `/cases/INC-RT-001?tab=ledger` — a LockBit 3.0 ransomware case mid-investigation, with the AI agent's prompts, tool calls, and rationale streaming into the [Investigation Ledger](apps/docs/docs/console/investigation-rail.md). Stop the real stack with `pnpm aisoc:demo:down`.
+The first row is new: [`SIRC-sandbox`](packages/SIRC-sandbox/) is a zero-dependency, in-memory simulator of the agent funnel. Pick a [bundled scenario](packages/SIRC-sandbox/README.md#bundled-scenarios) (`lateral-movement`, `aws-credential-exfil`, `phishing-payload`, `kubernetes-privesc`, `github-token-theft`) or feed in your own JSON via `--file`. The other three rows boot the real stack and land you on `/cases/INC-RT-001?tab=ledger` — a LockBit 3.0 ransomware case mid-investigation, with the AI agent's prompts, tool calls, and rationale streaming into the [Investigation Ledger](apps/docs/docs/console/investigation-rail.md). Stop the real stack with `pnpm SIRC:demo:down`.
 
-> **Does the demo still boot on `main`?** Every push runs [`compose-smoke`](https://github.com/beenuar/AiSOC/actions/workflows/compose-smoke.yml) (the same `pnpm aisoc:demo` path you'd run locally) and [`e2e`](https://github.com/beenuar/AiSOC/actions/workflows/e2e.yml) against the seeded console; nightly [`compose-smoke-nightly`](https://github.com/beenuar/AiSOC/actions/workflows/compose-smoke-nightly.yml) repeats it with cold caches. A red badge below is a release-blocker.
+> **Does the demo still boot on `main`?** Every push runs [`compose-smoke`](https://github.com/beenuar/SIRC/actions/workflows/compose-smoke.yml) (the same `pnpm SIRC:demo` path you'd run locally) and [`e2e`](https://github.com/beenuar/SIRC/actions/workflows/e2e.yml) against the seeded console; nightly [`compose-smoke-nightly`](https://github.com/beenuar/SIRC/actions/workflows/compose-smoke-nightly.yml) repeats it with cold caches. A red badge below is a release-blocker.
 >
-> [![Compose Smoke](https://img.shields.io/github/actions/workflow/status/beenuar/AiSOC/compose-smoke.yml?branch=main&label=compose-smoke%20%28main%29&style=flat-square)](https://github.com/beenuar/AiSOC/actions/workflows/compose-smoke.yml)
-> [![Nightly cold cache](https://img.shields.io/github/actions/workflow/status/beenuar/AiSOC/compose-smoke-nightly.yml?branch=main&label=compose-smoke%20%28nightly%2C%20cold%29&style=flat-square)](https://github.com/beenuar/AiSOC/actions/workflows/compose-smoke-nightly.yml)
-> [![E2E](https://img.shields.io/github/actions/workflow/status/beenuar/AiSOC/e2e.yml?branch=main&label=e2e%20%28seeded%20console%29&style=flat-square)](https://github.com/beenuar/AiSOC/actions/workflows/e2e.yml)
+> [![Compose Smoke](https://img.shields.io/github/actions/workflow/status/beenuar/SIRC/compose-smoke.yml?branch=main&label=compose-smoke%20%28main%29&style=flat-square)](https://github.com/beenuar/SIRC/actions/workflows/compose-smoke.yml)
+> [![Nightly cold cache](https://img.shields.io/github/actions/workflow/status/beenuar/SIRC/compose-smoke-nightly.yml?branch=main&label=compose-smoke%20%28nightly%2C%20cold%29&style=flat-square)](https://github.com/beenuar/SIRC/actions/workflows/compose-smoke-nightly.yml)
+> [![E2E](https://img.shields.io/github/actions/workflow/status/beenuar/SIRC/e2e.yml?branch=main&label=e2e%20%28seeded%20console%29&style=flat-square)](https://github.com/beenuar/SIRC/actions/workflows/e2e.yml)
 
 Full multi-platform deploy guide is in [`apps/docs/docs/installation.md`](apps/docs/docs/installation.md) (Render, Fly.io, Docker Compose, Kubernetes, Terraform). Production-grade install with full storage tier: [`infra/helm/`](infra/helm/) or [`infra/terraform/`](infra/terraform/).
 
 ---
 
-## What AiSOC is
+## What SIRC is
 
-AiSOC is a single self-hostable stack that ingests security events, correlates them, runs AI-driven investigation, and surfaces the result in a SOC console. The agent and the substrate are MIT-licensed, so you can read, fork, or replace either of them.
+SIRC is a single self-hostable stack that ingests security events, correlates them, runs AI-driven investigation, and surfaces the result in a SOC console. The agent and the substrate are MIT-licensed, so you can read, fork, or replace either of them.
 
 Three properties distinguish it from closed-source AI SOC vendors:
 
@@ -73,9 +51,9 @@ The orchestrator is a ~600-line LangGraph in [`services/agents/`](services/agent
 
 ---
 
-## How AiSOC compares
+## How SIRC compares
 
-| Capability | AiSOC | Wazuh | Splunk ES | Closed-source AI SOC |
+| Capability | SIRC | Wazuh | Splunk ES | Closed-source AI SOC |
 |---|---|---|---|---|
 | Open-source license | MIT | GPL-2 | proprietary | proprietary |
 | Self-hostable | yes | yes | enterprise-only | cloud-only |
@@ -87,7 +65,7 @@ The orchestrator is a ~600-line LangGraph in [`services/agents/`](services/agent
 | Data residency | your infra | your infra | partial | vendor cloud |
 | Pricing | $0 (self-host) | $0 (self-host) | per ingest GB | enterprise |
 
-Closed-source AI SOC vendors ship working products. AiSOC's contribution is making the agent itself open, the per-step decision trail readable, and the substrate gated by a public eval harness on every PR targeting `main` / `develop`.
+Closed-source AI SOC vendors ship working products. SIRC's contribution is making the agent itself open, the per-step decision trail readable, and the substrate gated by a public eval harness on every PR targeting `main` / `develop`.
 
 ---
 
@@ -178,18 +156,18 @@ A handful of headline capabilities — the rest are catalogued in [`apps/docs/do
 - **End-to-end SIEM spine** — a cold `docker compose up` ingests connector data → lands it in the ClickHouse event lake → the executable detection corpus (947 rules) fires on the live stream → a fused alert is created, all asserted by an extended integration gate. Fuse-time threat-intel + CISA-KEV enrichment now feeds the confidence score and exploit-in-wild boost, and **stateful/windowed detections** (brute-force, password-spray, port-scan) run alongside the corpus. [`apps/docs/docs/architecture.md`](apps/docs/docs/architecture.md).
 - **Autonomous triage + governed response** — every fused alert is auto-triaged by the agent (copilot/read-only by default) with a prompt-injection guard that demotes tampered evidence to manual review; a unified **confidence × blast-radius × reversibility** policy authorizes auto-execution only for reversible, low-blast actions at high confidence (everything else stays gated to a human), with real rollback + post-action verification. [`apps/docs/docs/concepts/automation-maturity.md`](apps/docs/docs/concepts/automation-maturity.md).
 - **Advanced Data Explorer** — one investigation surface (NL + SQL over the lake, plus pivots to identity/graph/intel), replacing the SIEM context-switch. `/explore`.
-- **Investigation Rail + replayable Investigation Ledger** — every prompt, tool call, evidence chip, and rationale stored against a case, replayable in the UI and shareable as a redacted public permalink ([live demo replay](https://tryaisoc.com/r/demo-lockbit)). [`apps/docs/docs/console/investigation-rail.md`](apps/docs/docs/console/investigation-rail.md).
+- **Investigation Rail + replayable Investigation Ledger** — every prompt, tool call, evidence chip, and rationale stored against a case, replayable in the UI and shareable as a redacted public permalink ([live demo replay](https://trySIRC.com/r/demo-lockbit)). [`apps/docs/docs/console/investigation-rail.md`](apps/docs/docs/console/investigation-rail.md).
 - **Detection-as-Code lifecycle** — propose → review → eval-gate → promote; CI rejects any candidate that fails its own positive/negative fixtures (the non-circular gate) or regresses MITRE accuracy. Analyst false-positive feedback now feeds a **self-improving tuner** that proposes scoped rule exceptions / severity changes (human-approved, never auto-applied). [`apps/docs/docs/concepts/detections.md`](apps/docs/docs/concepts/detections.md) — and the 869 native rules live in [`detections/`](detections/).
 - **Three-model AI + tool-using agents** — Semantic (graph-at-ingest), Behavioral (UEBA fused into alert scoring), and Knowledge (LLM), with fuse-time attack-chain grouping. The agent calls real tools (IOC enrichment, MITRE lookup, graph blast-radius) through an **LLM tool-calling loop**, and a **scored planner** routes each alert to the right specialist instead of fanning out to all four.
 - **Cost-governed LLM routing** — per-tenant budgets + circuit breaker, token/cost telemetry, a content-addressed response cache, a cheap-first cost cascade (escalate to the strong model only on low confidence), multi-model gateway fallbacks, and per-tenant BYOK keys. [`services/agents/app/routing/`](services/agents/app/routing/).
-- **Hunt-as-Code** — YAML hypotheses with MITRE tags, cron schedules, and natural-language `/hunt` workbench. [`hunts/`](hunts/) + [`apps/docs/docs/console/rule-tuning.md`](apps/docs/docs/console/rule-tuning.md). Plus free, login-free [browser tools](https://tryaisoc.com/tools): a Sigma/SPL/KQL/ES&#124;QL rule translator, an ATT&CK coverage grader, NL→Sigma, and a noise calculator.
+- **Hunt-as-Code** — YAML hypotheses with MITRE tags, cron schedules, and natural-language `/hunt` workbench. [`hunts/`](hunts/) + [`apps/docs/docs/console/rule-tuning.md`](apps/docs/docs/console/rule-tuning.md). Plus free, login-free [browser tools](https://trySIRC.com/tools): a Sigma/SPL/KQL/ES&#124;QL rule translator, an ATT&CK coverage grader, NL→Sigma, and a noise calculator.
 - **Public weekly benchmark scoreboard** — the same harness that gates PRs; the deterministic-tier row is CI-gated for freshness on every PR, and the funded weekly job appends live-LLM rows. A new **groundedness/hallucination axis** flags any indicator the agent asserts that isn't in the evidence it was given. [`apps/docs/docs/benchmark-scoreboard.mdx`](apps/docs/docs/benchmark-scoreboard.mdx).
 
 ---
 
 ## Use it from Claude, Cursor, or Cody
 
-AiSOC ships an [MCP server](https://modelcontextprotocol.io) (`services/mcp/`) so analysts can query alerts, run agent investigations, and replay every step the agent took without leaving the IDE or chat. The server exposes 13 tools — discovery, deep-dive, governed lake query, and the action / replay set that walks the agent decision ledger step-by-step.
+SIRC ships an [MCP server](https://modelcontextprotocol.io) (`services/mcp/`) so analysts can query alerts, run agent investigations, and replay every step the agent took without leaving the IDE or chat. The server exposes 13 tools — discovery, deep-dive, governed lake query, and the action / replay set that walks the agent decision ledger step-by-step.
 
 > **Status — monorepo source build today; npm publish lands in v8.0.** Full setup is in [`apps/docs/docs/integrations/mcp.md`](apps/docs/docs/integrations/mcp.md), which shows the today-vs-v8.0 invocations side by side.
 
@@ -199,19 +177,19 @@ AiSOC ships an [MCP server](https://modelcontextprotocol.io) (`services/mcp/`) s
 
 Three contribution surfaces; each is one file plus optional fixtures, and CI validates every PR.
 
-- **Detection rule.** Drop a Sigma YAML under [`detections/`](detections/) with a positive / negative fixture in [`detections/fixtures/`](detections/fixtures/). The [validate-detections](https://github.com/beenuar/AiSOC/actions/workflows/validate-detections.yml) workflow tests it on every PR. Spec: [`docs/connectors/`](apps/docs/docs/connectors/).
+- **Detection rule.** Drop a Sigma YAML under [`detections/`](detections/) with a positive / negative fixture in [`detections/fixtures/`](detections/fixtures/). The [validate-detections](https://github.com/beenuar/SIRC/actions/workflows/validate-detections.yml) workflow tests it on every PR. Spec: [`docs/connectors/`](apps/docs/docs/connectors/).
 - **Connector.** Subclass `BaseConnector` in [`services/connectors/app/connectors/`](services/connectors/app/connectors/), register it in `_CONNECTOR_CLASSES`, and add a `plugins/<id>/plugin.yaml` manifest. The marketplace picks it up automatically. Walkthrough: [`apps/docs/docs/connectors/`](apps/docs/docs/connectors/).
-- **Playbook.** Drop a YAML under [`playbooks/`](playbooks/); [`validate-playbooks`](https://github.com/beenuar/AiSOC/actions/workflows/validate-playbooks.yml) gates the PR. Schema: [`playbook.schema.json`](playbook.schema.json).
+- **Playbook.** Drop a YAML under [`playbooks/`](playbooks/); [`validate-playbooks`](https://github.com/beenuar/SIRC/actions/workflows/validate-playbooks.yml) gates the PR. Schema: [`playbook.schema.json`](playbook.schema.json).
 
-Plugin and detection SDK (Python · TypeScript · Go) — see [`apps/docs/docs/plugins/overview.md`](apps/docs/docs/plugins/overview.md). The CLI (`aisoc-cli`) is in [`packages/aisoc-cli/`](packages/aisoc-cli/); PyPI publish lands in v8.0.
+Plugin and detection SDK (Python · TypeScript · Go) — see [`apps/docs/docs/plugins/overview.md`](apps/docs/docs/plugins/overview.md). The CLI (`SIRC-cli`) is in [`packages/SIRC-cli/`](packages/SIRC-cli/); PyPI publish lands in v8.0.
 
-**In your CI:** add `- uses: beenuar/aisoc-action@v1` to triage your repo's Dependabot / CodeQL / secret-scanning alerts on every PR (deterministic, nothing leaves your runner; dogfooded on this repo, Marketplace publish lands with v8.0). [Docs](apps/docs/docs/integrations/github-action.md).
+**In your CI:** add `- uses: beenuar/SIRC-action@v1` to triage your repo's Dependabot / CodeQL / secret-scanning alerts on every PR (deterministic, nothing leaves your runner; dogfooded on this repo, Marketplace publish lands with v8.0). [Docs](apps/docs/docs/integrations/github-action.md).
 
 ---
 
 ## Roadmap & releases
 
-- **Latest GitHub release with downloads:** <https://github.com/beenuar/AiSOC/releases/latest>
+- **Latest GitHub release with downloads:** <https://github.com/beenuar/SIRC/releases/latest>
 - **Per-release narrative:** [`RELEASES.md`](RELEASES.md) (mirrors what used to live in this README)
 - **Machine-readable inventory with file paths, env-var diffs, test counts:** [`CHANGELOG.md`](CHANGELOG.md)
 - **v8.0 wave-2 in flight (`[~]` items):** [`docs/roadmap/v8-progress.md`](docs/roadmap/v8-progress.md)
@@ -223,28 +201,28 @@ Plugin and detection SDK (Python · TypeScript · Go) — see [`apps/docs/docs/p
 
 PRs of every size are welcome. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and the [Code of Conduct](CODE_OF_CONDUCT.md) before opening a PR.
 
-First-time contributors: pick a [`good first issue`](https://github.com/beenuar/AiSOC/issues?q=is%3Aopen+label%3A%22good+first+issue%22). Need help? [Open a Q&A discussion](https://github.com/beenuar/AiSOC/discussions/new?category=q-a).
+First-time contributors: pick a [`good first issue`](https://github.com/beenuar/SIRC/issues?q=is%3Aopen+label%3A%22good+first+issue%22). Need help? [Open a Q&A discussion](https://github.com/beenuar/SIRC/discussions/new?category=q-a).
 
 ---
 
 ## Credits
 
-AiSOC is built and improved by a growing community of contributors, security researchers, and operators. The full attribution — including bug reporters and security researchers — lives in [`.github/CREDITS.md`](.github/CREDITS.md). The always-up-to-date code-contribution graph is on the [GitHub contributors page](https://github.com/beenuar/AiSOC/graphs/contributors).
+SIRC is built and improved by a growing community of contributors, security researchers, and operators. The full attribution — including bug reporters and security researchers — lives in [`.github/CREDITS.md`](.github/CREDITS.md). The always-up-to-date code-contribution graph is on the [GitHub contributors page](https://github.com/beenuar/SIRC/graphs/contributors).
 
 ---
 
 ## Security
 
-For security issues, please do not open a public issue. Use [GitHub's private vulnerability reporting](https://github.com/beenuar/AiSOC/security/advisories/new). Full policy in [`SECURITY.md`](SECURITY.md). AiSOC follows coordinated disclosure.
+For security issues, please do not open a public issue. Use [GitHub's private vulnerability reporting](https://github.com/beenuar/SIRC/security/advisories/new). Full policy in [`SECURITY.md`](SECURITY.md). SIRC follows coordinated disclosure.
 
 ---
 
 ## License
 
-[MIT](LICENSE) — © 2024–present AiSOC contributors.
+[MIT](LICENSE) — © 2024–present SIRC contributors.
 
 <div align="center">
 
-[Report a bug](https://github.com/beenuar/AiSOC/issues/new?template=bug_report.yml) · [Request a feature](https://github.com/beenuar/AiSOC/issues/new?template=feature_request.yml) · [Contribute](CONTRIBUTING.md) · [Read the docs](apps/docs/) · [Reproduce the benchmark](apps/docs/docs/benchmark.md)
+[Report a bug](https://github.com/beenuar/SIRC/issues/new?template=bug_report.yml) · [Request a feature](https://github.com/beenuar/SIRC/issues/new?template=feature_request.yml) · [Contribute](CONTRIBUTING.md) · [Read the docs](apps/docs/) · [Reproduce the benchmark](apps/docs/docs/benchmark.md)
 
 </div>
