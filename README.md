@@ -1,3 +1,4 @@
+<div align="center">
 # ASE Project
 ## AI-Powered Real-Time Security Incident Response System
 <div align="center">
