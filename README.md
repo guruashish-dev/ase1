@@ -196,14 +196,6 @@ Plugin and detection SDK (Python · TypeScript · Go) — see [`apps/docs/docs/p
 
 ---
 
-## Contributing
-
-PRs of every size are welcome. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and the [Code of Conduct](CODE_OF_CONDUCT.md) before opening a PR.
-
-First-time contributors: pick a [`good first issue`](https://github.com/beenuar/SIRC/issues?q=is%3Aopen+label%3A%22good+first+issue%22). Need help? [Open a Q&A discussion](https://github.com/beenuar/SIRC/discussions/new?category=q-a).
-
----
-
 ## Credits
 
 SIRC is built and improved by a growing community of contributors, security researchers, and operators. The full attribution — including bug reporters and security researchers — lives in [`.github/CREDITS.md`](.github/CREDITS.md). The always-up-to-date code-contribution graph is on the [GitHub contributors page](https://github.com/beenuar/SIRC/graphs/contributors).
