@@ -217,7 +217,6 @@ jobs:
           gh issue create \
             --title "${title}" \
             --body "${body}" \
-            --label "ci" \
             || echo "::warning::Failed to open tracking issue"
 
       - name: Teardown

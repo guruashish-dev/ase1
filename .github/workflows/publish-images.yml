@@ -34,6 +34,8 @@ jobs:
   build:
     name: ${{ matrix.service }}
     runs-on: ubuntu-latest
+    env:
+      IMAGE_OWNER: ${{ github.repository_owner }}
     strategy:
       fail-fast: false
       matrix:
@@ -42,19 +44,19 @@ jobs:
           - service: api
             context: services/api
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-core-api
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-core-api
           - service: agents
             context: services/agents
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-agents
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-agents
           - service: realtime
             context: services/realtime
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-realtime
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-realtime
           - service: web
             context: .
             dockerfile: apps/web/Dockerfile
-            image: ghcr.io/beenuar/aisoc-web
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-web
 
           # Full-stack backend images. Published so `docker compose up -d` can
           # pull instead of build (with `pull_policy: missing`), shaving the
@@ -62,35 +64,35 @@ jobs:
           - service: ingest
             context: services/ingest
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-ingest
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-ingest
           - service: enrichment
             context: services/enrichment
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-enrichment
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-enrichment
           - service: fusion
             context: services/fusion
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-fusion
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-fusion
           - service: actions
             context: services/actions
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-actions
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-actions
           - service: connectors
             context: services/connectors
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-connectors
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-connectors
           - service: threatintel
             context: services/threatintel
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-threatintel
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-threatintel
           - service: ueba
             context: services/ueba
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-ueba
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-ueba
           - service: slack-bot
             context: services/slack-bot
             dockerfile: Dockerfile
-            image: ghcr.io/beenuar/aisoc-slack-bot
+            image: ghcr.io/${{ github.repository_owner }}/aisoc-slack-bot
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
 

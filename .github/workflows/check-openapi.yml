@@ -10,6 +10,7 @@ on:
     branches: [main]
     paths:
       - "services/api/**"
+      - "docs/openapi.yaml"
 
 # Shared install step extracted as a composite action would be cleaner, but for
 # simplicity we duplicate the pip install across both jobs.  The dep list mirrors

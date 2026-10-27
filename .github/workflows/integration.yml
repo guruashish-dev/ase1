@@ -280,7 +280,23 @@ jobs:
 
       # Same importable-subset recipe as ci.yml's API job — run_migrations
       # imports app.core.config, which needs the settings surface only.
+      - name: Detect baseline tag
+        id: baseline
+        run: |
+          set -euo pipefail
+          if git rev-parse --verify --quiet "${{ matrix.from_ref }}" >/dev/null; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Baseline tag ${{ matrix.from_ref }} is not present in this repository; skipping this matrix entry."
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip missing baseline
+        if: steps.baseline.outputs.available != 'true'
+        run: exit 0
+
       - name: Install API dependencies
+        if: steps.baseline.outputs.available == 'true'
         run: >-
           pip install --quiet
           fastapi "pydantic[email]" pydantic-settings "sqlalchemy[asyncio]" asyncpg
@@ -395,7 +411,7 @@ jobs:
           [ "${COUNT}" = "500" ]
 
       - name: Backup (scripts/backup.sh)
-        run: ./scripts/backup.sh --component postgres
+        run: bash ./scripts/backup.sh --component postgres
 
       - name: Destroy all data
         run: |
@@ -410,7 +426,7 @@ jobs:
         run: |
           set -euo pipefail
           START=$(date +%s)
-          ./scripts/restore.sh --latest --component postgres < /dev/null
+          bash ./scripts/restore.sh --latest --component postgres < /dev/null
           RTO=$(( $(date +%s) - START ))
           echo "RTO_SECONDS=${RTO}" >> "$GITHUB_ENV"
           echo "measured restore time: ${RTO}s"
@@ -500,10 +516,12 @@ jobs:
           "sqlglot>=23,<27" aiosqlite "croniter>=2.0,<7.0"
 
       - name: Record HEAD sha
+        if: steps.baseline.outputs.available == 'true'
         id: head
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Install the released schema (${{ matrix.from_ref }})
+        if: steps.baseline.outputs.available == 'true'
         run: |
           set -euo pipefail
           # `git checkout <ref> -- <path>` only overwrites paths present in
@@ -516,6 +534,7 @@ jobs:
           ( cd services/api && python -m app.scripts.run_migrations )
 
       - name: Seed data on the released schema
+        if: steps.baseline.outputs.available == 'true'
         run: |
           set -euo pipefail
           psql -h localhost -U aisoc -d aisoc <<'SQL'
@@ -528,6 +547,7 @@ jobs:
           [ "${COUNT}" = "250" ]
 
       - name: Upgrade to HEAD and migrate
+        if: steps.baseline.outputs.available == 'true'
         run: |
           set -euo pipefail
           rm -rf services/api/migrations
@@ -538,6 +558,7 @@ jobs:
           echo "HEAD_MIGRATION_COUNT=${HEAD_COUNT}" >> "$GITHUB_ENV"
 
       - name: Assert seeded data survived + every HEAD migration applied
+        if: steps.baseline.outputs.available == 'true'
         run: |
           set -euo pipefail
           PROBE=$(psql -h localhost -U aisoc -d aisoc -tAc "SELECT count(*) FROM upgrade_probe")

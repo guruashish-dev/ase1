@@ -2,7 +2,7 @@ name: Devcontainer · build & publish
 
 # Builds the prebuilt devcontainer image referenced from
 # `.devcontainer/devcontainer.json` and publishes it to
-# `ghcr.io/beenuar/aisoc-devcontainer`.
+# `ghcr.io/${{ github.repository_owner }}/aisoc-devcontainer`.
 #
 # Why: the prebuilt image is what makes a cold Codespace boot in ~30 s
 # instead of ~5 min. The user-visible KPI sits in
@@ -76,7 +76,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6
         with:
-          images: ghcr.io/beenuar/aisoc-devcontainer
+          images: ghcr.io/${{ github.repository_owner }}/aisoc-devcontainer
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha,prefix=sha-
